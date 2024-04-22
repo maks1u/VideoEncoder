@@ -1,6 +1,6 @@
 ﻿namespace VideoEncoder
 {
-    partial class Form1
+    partial class Encoder
     {
         /// <summary>
         /// Required designer variable.
@@ -181,7 +181,7 @@
             this.first.UseVisualStyleBackColor = true;
             this.first.CheckedChanged += new System.EventHandler(this.first_CheckedChanged);
             // 
-            // Form1
+            // Encoder
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -197,9 +197,11 @@
             this.Controls.Add(this.image_load);
             this.Controls.Add(this.video_load);
             this.Controls.Add(this.has_image);
-            this.Name = "Form1";
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.Name = "Encoder";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "VideoEncoder";
-            this.Load += new System.EventHandler(this.Form1_Load);
             this.view_mode.ResumeLayout(false);
             this.view_mode.PerformLayout();
             this.ResumeLayout(false);

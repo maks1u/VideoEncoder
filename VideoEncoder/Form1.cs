@@ -14,44 +14,39 @@ using VideoEncoder.Properties;
 
 namespace VideoEncoder
 {
-    public partial class Form1 : Form
+    public partial class Encoder : Form
     {
         struct Settings
         {
-            public string video_url { get; set; }
-            public string image_url { get; set; }
-            public string new_name { get; set; }
-            public int materials { get; set; }
-            public bool quad_mode { get; set; }
-            public bool use_image { get; set; }
+            public string VideUrl { get; set; }
+            public string ImageUrl { get; set; }
+            public string NewName { get; set; }
+            public int Materials { get; set; }
+            public bool QuadMode { get; set; }
+            public bool UseImage { get; set; }
 
             public Settings(
                 string videoUrl = null,
                 string imageUrl = null,
                 string newName = "output.mp4",
-                int Materials = 0,
+                int materials = 0,
                 bool quadMode = true,
                 bool useImage = false)
             {
-                video_url = videoUrl;
-                image_url = imageUrl;
-                new_name = newName;
-                materials = Materials;
-                quad_mode = quadMode;
-                use_image = useImage;
+                VideUrl = videoUrl;
+                ImageUrl = imageUrl;
+                NewName = newName;
+                Materials = materials;
+                QuadMode = quadMode;
+                UseImage = useImage;
             }
         }
 
         Settings Setting = new Settings();
 
-        public Form1()
+        public Encoder()
         {
             InitializeComponent();
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
         }
 
         private void video_load_Click(object sender, EventArgs e)
@@ -63,7 +58,7 @@ namespace VideoEncoder
             if (openDialog.ShowDialog() == DialogResult.OK)
             {
                 string selectedFile = openDialog.FileName;
-                Setting.video_url = selectedFile;
+                Setting.VideUrl = selectedFile;
 
                 video_load.Text = "Loaded " + System.IO.Path.GetFileName(selectedFile);
             }
@@ -78,7 +73,7 @@ namespace VideoEncoder
             if (openDialog.ShowDialog() == DialogResult.OK)
             {
                 string selectedFile = openDialog.FileName;
-                Setting.image_url = selectedFile;
+                Setting.ImageUrl = selectedFile;
 
                 image_load.Text = "Loaded " + System.IO.Path.GetFileName(selectedFile);
 
@@ -119,82 +114,82 @@ namespace VideoEncoder
         // -------------------------- VIEW MODES --------------------------
         private void dual_CheckedChanged(object sender, EventArgs e)
         {
-            if (dual.Checked && Setting.materials > 2)
+            if (dual.Checked && Setting.Materials > 2)
             {
                 quad.Checked = true;
                 MessageBox.Show("You have a lot of checked video tracks or images. Unchecked it first.");
             }
-            else if (dual.Checked) Setting.quad_mode = false;
+            else if (dual.Checked) Setting.QuadMode = false;
         }
 
         private void quad_CheckedChanged(object sender, EventArgs e)
         {
-            if (quad.Checked) Setting.quad_mode = true;
+            if (quad.Checked) Setting.QuadMode = true;
         }
         // -------------------------- END --------------------------
 
 
-        // -------------------------- MATERIALS ADD --------------------------
+        // -------------------------- Materials ADD --------------------------
         private void first_CheckedChanged(object sender, EventArgs e)
         {
-            if (first.Checked == false) Setting.materials -= 1;
+            if (first.Checked == false) Setting.Materials -= 1;
             else if (IsALotOf() == true && first.Checked)
             {
                 first.Checked = false;
-                Setting.materials += 1;
+                Setting.Materials += 1;
 
-                MessageBox.Show("Your view mode isn't support amount of choosed materials");
+                MessageBox.Show("Your view mode isn't support amount of choosed Materials");
                 return;
             }
-            else if (first.Checked) Setting.materials += 1;
+            else if (first.Checked) Setting.Materials += 1;
         }
 
         private void second_CheckedChanged(object sender, EventArgs e)
         {
-            if (second.Checked == false) Setting.materials -= 1;
+            if (second.Checked == false) Setting.Materials -= 1;
             else if (IsALotOf() == true && second.Checked)
             {
                 second.Checked = false;
-                Setting.materials += 1;
+                Setting.Materials += 1;
 
-                MessageBox.Show("Your view mode isn't support amount of choosed materials");
+                MessageBox.Show("Your view mode isn't support amount of choosed Materials");
                 return;
             }
-            else if (second.Checked) Setting.materials += 1;
+            else if (second.Checked) Setting.Materials += 1;
         }
 
         private void third_CheckedChanged(object sender, EventArgs e)
         {
-            if (third.Checked == false) Setting.materials -= 1;
+            if (third.Checked == false) Setting.Materials -= 1;
             else if (IsALotOf() == true && third.Checked)
             {
                 third.Checked = false;
-                Setting.materials += 1;
+                Setting.Materials += 1;
 
-                MessageBox.Show("Your view mode isn't support amount of choosed materials");
+                MessageBox.Show("Your view mode isn't support amount of choosed Materials");
                 return;
             }
-            else if (third.Checked) Setting.materials += 1;
+            else if (third.Checked) Setting.Materials += 1;
         }
 
         private void four_CheckedChanged(object sender, EventArgs e)
         {
-            if (four.Checked == false) Setting.materials -= 1;
+            if (four.Checked == false) Setting.Materials -= 1;
             else if (IsALotOf() == true && four.Checked)
             {
                 four.Checked = false;
-                Setting.materials += 1;
+                Setting.Materials += 1;
 
-                MessageBox.Show("Your view mode isn't support amount of choosed materials");
+                MessageBox.Show("Your view mode isn't support amount of choosed Materials");
                 return;
             }
-            else if (four.Checked) Setting.materials += 1;
+            else if (four.Checked) Setting.Materials += 1;
         }
 
         private bool IsALotOf()
         {
-            int limit = Setting.quad_mode ? 4 : 2;
-            return (limit < Setting.materials + 1) ? true : false;
+            int limit = Setting.QuadMode ? 4 : 2;
+            return (limit < Setting.Materials + 1) ? true : false;
         }
 
         // IMAGE
@@ -202,20 +197,21 @@ namespace VideoEncoder
         {
             if (has_image.Checked == false)
             {
-                Setting.materials--;
+                Setting.Materials--;
+                Setting.UseImage = false;
             }
             else if (IsALotOf() == true && has_image.Checked)
             {
                 has_image.Checked = false;
-                Setting.materials++;
+                Setting.Materials++;
 
-                MessageBox.Show("Your view mode isn't support amount of choosed materials");
+                MessageBox.Show("Your view mode isn't support amount of choosed Materials");
                 return;
             }
             else if (has_image.Checked)
             {
-                Setting.materials++;
-                Setting.use_image = true;
+                Setting.Materials++;
+                Setting.UseImage = true;
             }
         }
 
@@ -225,33 +221,55 @@ namespace VideoEncoder
         // -------------------------- RENDER --------------------------
         private void create_video_Click(object sender, EventArgs e)
         {
-            if (Setting.video_url == null)
+            if (Setting.VideUrl == null)
             {
                 MessageBox.Show("Video is not loaded");
                 return;
             }
-            else if (Setting.image_url == null && Setting.use_image)
+            else if (Setting.ImageUrl == null && Setting.UseImage)
             {
                 MessageBox.Show("You check 'Use image', but image is not loaded");
                 return;
             }
+            else if (Setting.Materials <= 0)
+            {
+                MessageBox.Show("Not enough materials (video tracks, image).");
+                return;
+            }
 
-            Setting.new_name = name_video.Text;
-            string directoryPath = Path.GetDirectoryName(Setting.video_url);
-            string new_name = directoryPath + "\\" + Setting.new_name + ".mp4";
+            Setting.NewName = name_video.Text;
+            if (Setting.NewName == null || Setting.NewName == "")
+            {
+                MessageBox.Show("Error name of file");
+                return;
+            }
+
+            string directoryPath = Path.GetDirectoryName(Setting.VideUrl);
+            string NewName = directoryPath + "\\" + Setting.NewName + ".mp4";
+
+            string outputFilePath = Path.Combine(directoryPath, $"{Setting.NewName}.mp4");
+            bool isYes = true;
+            if (File.Exists(outputFilePath))
+            {
+                DialogResult dialogResult = MessageBox.Show($"File '{Setting.NewName}.mp4' exists in the video source folder. Overwrite file?", "The file exists", MessageBoxButtons.YesNo);
+                if (dialogResult == DialogResult.Yes)
+                {
+                    File.Delete(outputFilePath);
+                }
+                else if (dialogResult == DialogResult.No)
+                {
+                    isYes = false;
+                    MessageBox.Show("Enter a new file name.");
+                }
+            }
+
+            if (isYes == false) return;
 
             string map = "mosaic";
             string filter = "";
 
-            if (Setting.materials == 1)
-            {
-                MessageBox.Show("You only have 1 selected material.");
-                return;
-            }
-
-
-            int size = Setting.materials;
-            if (Setting.use_image) size--;
+            int size = Setting.Materials;
+            if (Setting.UseImage) size--;
             int[] tracks = new int[size];
 
             int entered = 0;
@@ -276,21 +294,26 @@ namespace VideoEncoder
                 entered++;
             }
 
-            if (Setting.materials == 2 && Setting.use_image == false) filter = $"[0:v:{tracks[0]}]scale=iw/2:-1[top1];[0:v:{tracks[1]}]scale=iw/2:-1[top2];[top1][top2]hstack[mosaic]";
-            else if (Setting.materials == 2 && Setting.use_image) filter = $"[0:v:{tracks[0]}]scale=iw/2:-1[top1];[1:v]scale=iw/2:-1[top2];[top1][top2]hstack[mosaic]";
+            if (Setting.Materials == 2 && Setting.UseImage == false) filter = $"[0:v:{tracks[0]}]scale=iw/2:-1[top1];[0:v:{tracks[1]}]scale=iw/2:-1[top2];[top1][top2]hstack[mosaic]";
+            else if (Setting.Materials == 2 && Setting.UseImage) filter = $"[0:v:{tracks[0]}]scale=iw/2:-1[top1];[1:v]scale=iw/2:-1[top2];[top1][top2]hstack[mosaic]";
 
-            else if (Setting.materials == 3 && Setting.use_image == false) filter = $"[0:v:{tracks[0]}]scale=iw/2:-1[top1];[0:v:{tracks[1]}]scale=iw/2:-1[top2];[0:v:{tracks[2]}]scale=iw/2:-1[bottom1];[0:v:{tracks[2]}]scale=iw/2:-1[bottom2];[top1][top2]hstack[top];[bottom1][bottom2]hstack[bottom];[top][bottom]vstack[mosaic]";
-            else if (Setting.materials == 3 && Setting.use_image) filter = $"[0:v:{tracks[0]}]scale=iw/2:-1[top1];[0:v:{tracks[1]}]scale=iw/2:-1[top2];[1:v]scale=iw/2:-1[bottom1];[1:v]scale=iw/2:-1[bottom2];[top1][top2]hstack[top];[bottom1][bottom2]hstack[bottom];[top][bottom]vstack[mosaic]";
+            else if (Setting.Materials == 3 && Setting.UseImage == false) filter = $"[0:v:{tracks[0]}]scale=iw/2:-1[top1];[0:v:{tracks[1]}]scale=iw/2:-1[top2];[0:v:{tracks[2]}]scale=iw/2:-1[bottom1];[0:v:{tracks[2]}]scale=iw/2:-1[bottom2];[top1][top2]hstack[top];[bottom1][bottom2]hstack[bottom];[top][bottom]vstack[mosaic]";
+            else if (Setting.Materials == 3 && Setting.UseImage) filter = $"[0:v:{tracks[0]}]scale=iw/2:-1[top1];[0:v:{tracks[1]}]scale=iw/2:-1[top2];[1:v]scale=iw/2:-1[bottom1];[1:v]scale=iw/2:-1[bottom2];[top1][top2]hstack[top];[bottom1][bottom2]hstack[bottom];[top][bottom]vstack[mosaic]";
 
-            else if (Setting.materials == 4 && Setting.use_image == false) filter = $"[0:v:{tracks[0]}]scale=iw/2:-1[top1];[0:v:{tracks[1]}]scale=iw/2:-1[top2];[0:v:{tracks[2]}]scale=iw/2:-1[bottom1];[0:v:{tracks[3]}]scale=iw/2:-1[bottom2];[top1][top2]hstack[top];[bottom1][bottom2]hstack[bottom];[top][bottom]vstack[mosaic]";
-            else if (Setting.materials == 4 && Setting.use_image) filter = $"[0:v:{tracks[0]}]scale=iw/2:-1[top1];[0:v:{tracks[1]}]scale=iw/2:-1[top2];[0:v:{tracks[2]}]scale=iw/2:-1[bottom1];[1:v]scale=iw/2:-1[bottom2];[top1][top2]hstack[top];[bottom1][bottom2]hstack[bottom];[top][bottom]vstack[mosaic]";
+            else if (Setting.Materials == 4 && Setting.UseImage == false) filter = $"[0:v:{tracks[0]}]scale=iw/2:-1[top1];[0:v:{tracks[1]}]scale=iw/2:-1[top2];[0:v:{tracks[2]}]scale=iw/2:-1[bottom1];[0:v:{tracks[3]}]scale=iw/2:-1[bottom2];[top1][top2]hstack[top];[bottom1][bottom2]hstack[bottom];[top][bottom]vstack[mosaic]";
+            else if (Setting.Materials == 4 && Setting.UseImage) filter = $"[0:v:{tracks[0]}]scale=iw/2:-1[top1];[0:v:{tracks[1]}]scale=iw/2:-1[top2];[0:v:{tracks[2]}]scale=iw/2:-1[bottom1];[1:v]scale=iw/2:-1[bottom2];[top1][top2]hstack[top];[bottom1][bottom2]hstack[bottom];[top][bottom]vstack[mosaic]";
 
-            string materials = $"-i \"{Setting.video_url}\"";
-            if (Setting.use_image == true) materials += $" -i \"{Setting.image_url}\"";
+            string materials = $"-i \"{Setting.VideUrl}\"";
+            if (Setting.UseImage == true) materials += $" -i \"{Setting.ImageUrl}\"";
 
-            //filter = "[0:v:0]scale=iw/2:-1[top1];[0:v:1]scale=iw/2:-1[top2];[top1][top2]hstack[mosaic]";
-            string ffmpegCommand = $"ffmpeg {materials} -filter_complex \"{filter}\" -map \"[{map}]\" -c:v libx264 -c:a ac3 -crf 20 \"{new_name}\"";
+            string ffmpegCommand = $"ffmpeg {materials} -filter_complex \"{filter}\" -map \"[{map}]\" -c:v libx264 -c:a ac3 -crf 20 \"{NewName}\"";
 
+            string batchFilePath = Path.Combine(Application.StartupPath, "command.bat");
+            using (StreamWriter writer = new StreamWriter(batchFilePath))
+            {
+                writer.WriteLine(ffmpegCommand);
+            }
+            
             Process cmd = new Process();
             cmd.StartInfo.FileName = "cmd.exe";
             cmd.StartInfo.RedirectStandardInput = true;
@@ -303,29 +326,30 @@ namespace VideoEncoder
             cmd.StandardInput.Flush();
             cmd.StandardInput.Close();
             cmd.WaitForExit();
-            Console.WriteLine(cmd.StandardOutput.ReadToEnd());
 
-            /*
-            ProcessStartInfo startInfo = new ProcessStartInfo
+            if (File.Exists(outputFilePath))
             {
-                FileName = "cmd.exe",
-                Arguments = $"/c {ffmpegCommand}",
-                RedirectStandardOutput = true,
-                RedirectStandardError = true,
-                CreateNoWindow = false, 
-                UseShellExecute = false
-            };
+                // Get the file size
+                FileInfo fileInfo = new FileInfo(outputFilePath);
+                long fileSizeInBytes = fileInfo.Length;
 
-            using (Process process = new Process { StartInfo = startInfo })
-            {
-                process.Start();
-                process.WaitForExit();
+                // Convert to KB
+                double fileSizeInKB = fileSizeInBytes / 1024; // Divide by 1024 to convert bytes to kilobytes
+
+                if (fileSizeInKB < 1)
+                {
+                    MessageBox.Show($"Error. You have selected the wrong video tracks.");
+                }
+                else
+                {
+                    MessageBox.Show("Video is saved in the folder of loaded video!");
+                }
             }
-            */
-
-            MessageBox.Show("Video is saved in the folder of loaded video!");
+            else
+            {
+                MessageBox.Show("The video was not saved. You may have selected the wrong video tracks!");
+            }
         }
-        
         // -------------------------- END --------------------------
     }
 }
