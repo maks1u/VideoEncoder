@@ -65,7 +65,14 @@ namespace VideoEncoder
                 string selectedFile = openDialog.FileName;
                 Setting.VideUrl = selectedFile;
 
-                video_load.Text = "Loaded " + System.IO.Path.GetFileName(selectedFile);
+                string newText = "Loaded " + Path.GetFileName(selectedFile);
+                if (newText.Length > 22) newText = newText.Remove(newText.Length - (newText.Length - 22)) + "...";
+
+                video_load.Text = newText;
+
+                string mode = "_dual";
+                if (Setting.QuadMode) mode = "_quad";
+                name_video.Text = Path.GetFileNameWithoutExtension(selectedFile) + mode + ".mp4";
             }
         }
 
@@ -80,7 +87,10 @@ namespace VideoEncoder
                 string selectedFile = openDialog.FileName;
                 Setting.ImageUrl = selectedFile;
 
-                image_load.Text = "Loaded " + System.IO.Path.GetFileName(selectedFile);
+                string newText = "Loaded " + Path.GetFileName(selectedFile);
+                if (newText.Length > 22) newText = newText.Remove(newText.Length - (newText.Length - 22)) + "...";
+
+                image_load.Text = newText;
 
                 try
                 {
@@ -88,7 +98,7 @@ namespace VideoEncoder
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Error loading image: " + ex.Message);
+                    MessageBox.Show("Error loading image: " + ex.Message, "Image loading", MessageBoxButtons.OK, ErrorIcon);
                 }
             }
         }
@@ -124,12 +134,20 @@ namespace VideoEncoder
                 quad.Checked = true;
                 MessageBox.Show("You have a lot of checked video tracks or images. Unchecked it first.", "Error", MessageBoxButtons.OK, ErrorIcon);
             }
-            else if (dual.Checked) Setting.QuadMode = false;
+            else if (dual.Checked)
+            {
+                Setting.QuadMode = false;
+                name_video.Text = name_video.Text.Replace("_quad", "_dual");
+            }
         }
 
         private void quad_CheckedChanged(object sender, EventArgs e)
         {
-            if (quad.Checked) Setting.QuadMode = true;
+            if (quad.Checked)
+            {
+                Setting.QuadMode = true;
+                name_video.Text = name_video.Text.Replace("_dual", "_quad");
+            }
         }
         // -------------------------- END --------------------------
 
@@ -236,31 +254,33 @@ namespace VideoEncoder
                 MessageBox.Show("You check 'Use image', but image is not loaded", "Creating warning", MessageBoxButtons.OK, WarningIcon);
                 return;
             }
-            else if (Setting.Materials <= 0)
+            else if (Setting.Materials <= 1)
             {
                 MessageBox.Show("Not enough materials (video tracks, image).", "Creating warning", MessageBoxButtons.OK, WarningIcon);
                 return;
             }
-
-            string paramert = "";
-            if (name_video.Text == null || name_video.Text == "")
+            else if (Setting.QuadMode && Setting.Materials <= 3)
             {
-                paramert = "_dual";
-                if (Setting.QuadMode) paramert = "_quad";
-
-                Setting.NewName = System.IO.Path.GetFileNameWithoutExtension(Setting.VideUrl) + paramert;
+                DialogResult dialogResult = MessageBox.Show($"There are not enought materials selected. ViewMode will be changed to \"Dual\". Do you want continue?", "ViewMode warning", MessageBoxButtons.YesNo, QuestionIcon);
+                if (dialogResult == DialogResult.Yes) dual.Checked = true;
+                else if (dialogResult == DialogResult.No)
+                {
+                    MessageBox.Show("Change view mode or add materials (like image or video tracks).", "Information", MessageBoxButtons.OK, InfoIcon);
+                    return;
+                }
             }
-            else Setting.NewName = name_video.Text;
+
+            if (name_video.Text.EndsWith(".mp4")) Setting.NewName = name_video.Text;
+            else Setting.NewName = name_video.Text + ".mp4";
 
             string directoryPath = Path.GetDirectoryName(Setting.VideUrl);
+            string NewName = directoryPath + "\\" + Setting.NewName;
 
-            string NewName = directoryPath + "\\" + Setting.NewName + ".mp4";
-
-            string outputFilePath = Path.Combine(directoryPath, $"{Setting.NewName}.mp4");
+            string outputFilePath = Path.Combine(directoryPath, $"{Setting.NewName}");
             bool isYes = true;
             if (File.Exists(outputFilePath))
             {
-                DialogResult dialogResult = MessageBox.Show($"File '{Setting.NewName}.mp4' exists in the video source folder. Overwrite file?", "The file exists", MessageBoxButtons.YesNo, QuestionIcon);
+                DialogResult dialogResult = MessageBox.Show($"File '{Setting.NewName}' exists in the video source folder. Overwrite file?", "The file exists", MessageBoxButtons.YesNo, QuestionIcon);
                 if (dialogResult == DialogResult.Yes)
                 {
                     File.Delete(outputFilePath);

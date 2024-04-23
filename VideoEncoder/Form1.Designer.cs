@@ -38,7 +38,8 @@ namespace VideoEncoder
             this.video_load = new System.Windows.Forms.Button();
             this.image_load = new System.Windows.Forms.Button();
             this.view_mode = new System.Windows.Forms.GroupBox();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.dual_mode_image = new System.Windows.Forms.PictureBox();
+            this.quad_mode_image = new System.Windows.Forms.PictureBox();
             this.quad = new System.Windows.Forms.RadioButton();
             this.dual = new System.Windows.Forms.RadioButton();
             this.create_video = new System.Windows.Forms.Button();
@@ -48,10 +49,11 @@ namespace VideoEncoder
             this.third = new System.Windows.Forms.CheckBox();
             this.second = new System.Windows.Forms.CheckBox();
             this.first = new System.Windows.Forms.CheckBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.right_top_image = new System.Windows.Forms.PictureBox();
             this.view_mode.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dual_mode_image)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.quad_mode_image)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.right_top_image)).BeginInit();
             this.SuspendLayout();
             // 
             // has_image
@@ -87,19 +89,27 @@ namespace VideoEncoder
             // 
             // view_mode
             // 
-            this.view_mode.Controls.Add(this.pictureBox1);
-            this.view_mode.Controls.Add(this.pictureBox2);
+            this.view_mode.Controls.Add(this.dual_mode_image);
+            this.view_mode.Controls.Add(this.quad_mode_image);
             this.view_mode.Controls.Add(this.quad);
             this.view_mode.Controls.Add(this.dual);
             resources.ApplyResources(this.view_mode, "view_mode");
             this.view_mode.Name = "view_mode";
             this.view_mode.TabStop = false;
             // 
-            // pictureBox2
+            // dual_mode_image
             // 
-            resources.ApplyResources(this.pictureBox2, "pictureBox2");
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.TabStop = false;
+            this.dual_mode_image.BackColor = System.Drawing.Color.Transparent;
+            resources.ApplyResources(this.dual_mode_image, "dual_mode_image");
+            this.dual_mode_image.Name = "dual_mode_image";
+            this.dual_mode_image.TabStop = false;
+            // 
+            // quad_mode_image
+            // 
+            this.quad_mode_image.BackColor = System.Drawing.Color.Transparent;
+            resources.ApplyResources(this.quad_mode_image, "quad_mode_image");
+            this.quad_mode_image.Name = "quad_mode_image";
+            this.quad_mode_image.TabStop = false;
             // 
             // quad
             // 
@@ -118,19 +128,7 @@ namespace VideoEncoder
             this.dual.CheckedChanged += new System.EventHandler(this.dual_CheckedChanged);
             // 
             // create_video
-            //
-            // Create rounded create video button
-            this.create_video = new RoundedButton();
-            this.create_video.BackColor = Color.FromArgb(0, 114, 222);
-            this.create_video.FlatAppearance.BorderSize = 0;
-            this.create_video.FlatAppearance.MouseOverBackColor = Color.FromArgb(0, 95, 184);
-            this.create_video.ForeColor = Color.WhiteSmoke;
-            this.create_video.Size = new Size(377, 46);
-            this.create_video.Location = new Point(31, 189);
-            this.create_video.Text = "Create Video";
-            this.create_video.Click += new EventHandler(this.create_video_Click);
-            this.Controls.Add(this.create_video);
-            /*
+            // 
             this.create_video.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(114)))), ((int)(((byte)(222)))));
             this.create_video.Cursor = System.Windows.Forms.Cursors.Default;
             this.create_video.FlatAppearance.BorderSize = 0;
@@ -140,7 +138,6 @@ namespace VideoEncoder
             this.create_video.Name = "create_video";
             this.create_video.UseVisualStyleBackColor = false;
             this.create_video.Click += new System.EventHandler(this.create_video_Click);
-            */
             // 
             // name_video
             // 
@@ -183,17 +180,19 @@ namespace VideoEncoder
             this.first.UseVisualStyleBackColor = true;
             this.first.CheckedChanged += new System.EventHandler(this.first_CheckedChanged);
             // 
-            // pictureBox1
+            // right_top_image
             // 
-            resources.ApplyResources(this.pictureBox1, "pictureBox1");
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.TabStop = false;
+            this.right_top_image.BackColor = System.Drawing.Color.Transparent;
+            resources.ApplyResources(this.right_top_image, "right_top_image");
+            this.right_top_image.Name = "right_top_image";
+            this.right_top_image.TabStop = false;
             // 
             // Encoder
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.Controls.Add(this.right_top_image);
             this.Controls.Add(this.four);
             this.Controls.Add(this.third);
             this.Controls.Add(this.label_for_name);
@@ -212,13 +211,15 @@ namespace VideoEncoder
             this.Name = "Encoder";
             this.view_mode.ResumeLayout(false);
             this.view_mode.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dual_mode_image)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.quad_mode_image)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.right_top_image)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
+        /*
         public class RoundedButton : Button
         {
             public int CornerRadius { get; set; } = 5;
@@ -255,7 +256,7 @@ namespace VideoEncoder
                 }
             }
         }
-
+        */
 
         #endregion
         private System.Windows.Forms.CheckBox has_image;
@@ -271,7 +272,8 @@ namespace VideoEncoder
         private System.Windows.Forms.CheckBox third;
         private System.Windows.Forms.CheckBox second;
         private System.Windows.Forms.CheckBox first;
-        private PictureBox pictureBox2;
-        private PictureBox pictureBox1;
+        private PictureBox quad_mode_image;
+        private PictureBox dual_mode_image;
+        private PictureBox right_top_image;
     }
 }
