@@ -42,6 +42,11 @@ namespace VideoEncoder
             }
         }
 
+        const MessageBoxIcon ErrorIcon = MessageBoxIcon.Error;
+        const MessageBoxIcon InfoIcon = MessageBoxIcon.Information;
+        const MessageBoxIcon QuestionIcon = MessageBoxIcon.Question;
+        const MessageBoxIcon WarningIcon = MessageBoxIcon.Warning;
+
         Settings Setting = new Settings();
 
         public Encoder()
@@ -94,7 +99,7 @@ namespace VideoEncoder
         {
             if (ContainsForbiddenSymbols(name_video.Text))
             {
-                MessageBox.Show("The name contains forbidden symbols for a file name in Windows.");
+                MessageBox.Show("The name contains forbidden symbols for a file name in Windows.", "Error name", MessageBoxButtons.OK, ErrorIcon);
 
                 if (name_video.Text.Length > 0)
                 {
@@ -117,7 +122,7 @@ namespace VideoEncoder
             if (dual.Checked && Setting.Materials > 2)
             {
                 quad.Checked = true;
-                MessageBox.Show("You have a lot of checked video tracks or images. Unchecked it first.");
+                MessageBox.Show("You have a lot of checked video tracks or images. Unchecked it first.", "Error", MessageBoxButtons.OK, ErrorIcon);
             }
             else if (dual.Checked) Setting.QuadMode = false;
         }
@@ -138,7 +143,7 @@ namespace VideoEncoder
                 first.Checked = false;
                 Setting.Materials += 1;
 
-                MessageBox.Show("Your view mode isn't support amount of choosed Materials");
+                MessageBox.Show("Your view mode isn't support amount of choosed Materials", "ViewMode Error", MessageBoxButtons.OK, ErrorIcon);
                 return;
             }
             else if (first.Checked) Setting.Materials += 1;
@@ -152,7 +157,7 @@ namespace VideoEncoder
                 second.Checked = false;
                 Setting.Materials += 1;
 
-                MessageBox.Show("Your view mode isn't support amount of choosed Materials");
+                MessageBox.Show("Your view mode isn't support amount of choosed Materials", "ViewMode Error", MessageBoxButtons.OK, ErrorIcon);
                 return;
             }
             else if (second.Checked) Setting.Materials += 1;
@@ -166,7 +171,7 @@ namespace VideoEncoder
                 third.Checked = false;
                 Setting.Materials += 1;
 
-                MessageBox.Show("Your view mode isn't support amount of choosed Materials");
+                MessageBox.Show("Your view mode isn't support amount of choosed Materials", "ViewMode Error", MessageBoxButtons.OK, ErrorIcon);
                 return;
             }
             else if (third.Checked) Setting.Materials += 1;
@@ -180,7 +185,7 @@ namespace VideoEncoder
                 four.Checked = false;
                 Setting.Materials += 1;
 
-                MessageBox.Show("Your view mode isn't support amount of choosed Materials");
+                MessageBox.Show("Your view mode isn't support amount of choosed Materials", "ViewMode Error", MessageBoxButtons.OK, ErrorIcon);
                 return;
             }
             else if (four.Checked) Setting.Materials += 1;
@@ -205,7 +210,7 @@ namespace VideoEncoder
                 has_image.Checked = false;
                 Setting.Materials++;
 
-                MessageBox.Show("Your view mode isn't support amount of choosed Materials");
+                MessageBox.Show("Your view mode isn't support amount of choosed Materials", "ViewMode Error", MessageBoxButtons.OK, ErrorIcon);
                 return;
             }
             else if (has_image.Checked)
@@ -223,35 +228,39 @@ namespace VideoEncoder
         {
             if (Setting.VideUrl == null)
             {
-                MessageBox.Show("Video is not loaded");
+                MessageBox.Show("Video is not loaded", "Creating warning", MessageBoxButtons.OK, WarningIcon);
                 return;
             }
             else if (Setting.ImageUrl == null && Setting.UseImage)
             {
-                MessageBox.Show("You check 'Use image', but image is not loaded");
+                MessageBox.Show("You check 'Use image', but image is not loaded", "Creating warning", MessageBoxButtons.OK, WarningIcon);
                 return;
             }
             else if (Setting.Materials <= 0)
             {
-                MessageBox.Show("Not enough materials (video tracks, image).");
+                MessageBox.Show("Not enough materials (video tracks, image).", "Creating warning", MessageBoxButtons.OK, WarningIcon);
                 return;
             }
 
-            Setting.NewName = name_video.Text;
-            if (Setting.NewName == null || Setting.NewName == "")
+            string paramert = "";
+            if (name_video.Text == null || name_video.Text == "")
             {
-                MessageBox.Show("Error name of file");
-                return;
+                paramert = "_dual";
+                if (Setting.QuadMode) paramert = "_quad";
+
+                Setting.NewName = System.IO.Path.GetFileNameWithoutExtension(Setting.VideUrl) + paramert;
             }
+            else Setting.NewName = name_video.Text;
 
             string directoryPath = Path.GetDirectoryName(Setting.VideUrl);
+
             string NewName = directoryPath + "\\" + Setting.NewName + ".mp4";
 
             string outputFilePath = Path.Combine(directoryPath, $"{Setting.NewName}.mp4");
             bool isYes = true;
             if (File.Exists(outputFilePath))
             {
-                DialogResult dialogResult = MessageBox.Show($"File '{Setting.NewName}.mp4' exists in the video source folder. Overwrite file?", "The file exists", MessageBoxButtons.YesNo);
+                DialogResult dialogResult = MessageBox.Show($"File '{Setting.NewName}.mp4' exists in the video source folder. Overwrite file?", "The file exists", MessageBoxButtons.YesNo, QuestionIcon);
                 if (dialogResult == DialogResult.Yes)
                 {
                     File.Delete(outputFilePath);
@@ -259,7 +268,7 @@ namespace VideoEncoder
                 else if (dialogResult == DialogResult.No)
                 {
                     isYes = false;
-                    MessageBox.Show("Enter a new file name.");
+                    MessageBox.Show("Enter a new file name.", "Information", MessageBoxButtons.OK, InfoIcon);
                 }
             }
 
@@ -338,16 +347,16 @@ namespace VideoEncoder
 
                 if (fileSizeInKB < 1)
                 {
-                    MessageBox.Show($"Error. You have selected the wrong video tracks.");
+                    MessageBox.Show($"Error. You have selected the wrong video tracks.", "Video tracks error", MessageBoxButtons.OK, ErrorIcon);
                 }
                 else
                 {
-                    MessageBox.Show("Video is saved in the folder of loaded video!");
+                    MessageBox.Show("Video is saved in the folder of loaded video!", "Rendered", MessageBoxButtons.OK, InfoIcon);
                 }
             }
             else
             {
-                MessageBox.Show("The video was not saved. You may have selected the wrong video tracks!");
+                MessageBox.Show("The video was not saved. You may have selected the wrong video tracks!", "Video error", MessageBoxButtons.OK, WarningIcon);
             }
         }
         // -------------------------- END --------------------------

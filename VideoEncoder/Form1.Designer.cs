@@ -1,4 +1,9 @@
-﻿namespace VideoEncoder
+﻿using System;
+using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Windows.Forms;
+
+namespace VideoEncoder
 {
     partial class Encoder
     {
@@ -28,10 +33,12 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Encoder));
             this.has_image = new System.Windows.Forms.CheckBox();
             this.video_load = new System.Windows.Forms.Button();
             this.image_load = new System.Windows.Forms.Button();
             this.view_mode = new System.Windows.Forms.GroupBox();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.quad = new System.Windows.Forms.RadioButton();
             this.dual = new System.Windows.Forms.RadioButton();
             this.create_video = new System.Windows.Forms.Button();
@@ -41,151 +48,152 @@
             this.third = new System.Windows.Forms.CheckBox();
             this.second = new System.Windows.Forms.CheckBox();
             this.first = new System.Windows.Forms.CheckBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.view_mode.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // has_image
             // 
-            this.has_image.AutoSize = true;
-            this.has_image.Location = new System.Drawing.Point(239, 70);
+            resources.ApplyResources(this.has_image, "has_image");
             this.has_image.Name = "has_image";
-            this.has_image.Size = new System.Drawing.Size(82, 17);
-            this.has_image.TabIndex = 2;
-            this.has_image.Text = "Add image?";
             this.has_image.UseVisualStyleBackColor = true;
             this.has_image.CheckedChanged += new System.EventHandler(this.has_image_CheckedChanged);
             // 
             // video_load
             // 
-            this.video_load.Location = new System.Drawing.Point(23, 29);
+            this.video_load.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(229)))), ((int)(((byte)(229)))), ((int)(((byte)(229)))));
+            this.video_load.Cursor = System.Windows.Forms.Cursors.Default;
+            this.video_load.FlatAppearance.BorderSize = 0;
+            this.video_load.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(221)))), ((int)(((byte)(221)))), ((int)(((byte)(221)))));
+            resources.ApplyResources(this.video_load, "video_load");
+            this.video_load.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(74)))), ((int)(((byte)(74)))));
             this.video_load.Name = "video_load";
-            this.video_load.Size = new System.Drawing.Size(190, 23);
-            this.video_load.TabIndex = 3;
-            this.video_load.Text = "Load Video";
-            this.video_load.UseVisualStyleBackColor = true;
+            this.video_load.UseVisualStyleBackColor = false;
             this.video_load.Click += new System.EventHandler(this.video_load_Click);
             // 
             // image_load
             // 
-            this.image_load.Location = new System.Drawing.Point(23, 66);
+            this.image_load.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(229)))), ((int)(((byte)(229)))), ((int)(((byte)(229)))));
+            this.image_load.Cursor = System.Windows.Forms.Cursors.Default;
+            this.image_load.FlatAppearance.BorderSize = 0;
+            this.image_load.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(221)))), ((int)(((byte)(221)))), ((int)(((byte)(221)))));
+            resources.ApplyResources(this.image_load, "image_load");
+            this.image_load.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(74)))), ((int)(((byte)(74)))));
             this.image_load.Name = "image_load";
-            this.image_load.Size = new System.Drawing.Size(190, 23);
-            this.image_load.TabIndex = 4;
-            this.image_load.Text = "Load image";
-            this.image_load.UseVisualStyleBackColor = true;
+            this.image_load.UseVisualStyleBackColor = false;
             this.image_load.Click += new System.EventHandler(this.image_load_Click);
             // 
             // view_mode
             // 
+            this.view_mode.Controls.Add(this.pictureBox1);
+            this.view_mode.Controls.Add(this.pictureBox2);
             this.view_mode.Controls.Add(this.quad);
             this.view_mode.Controls.Add(this.dual);
-            this.view_mode.Location = new System.Drawing.Point(374, 66);
+            resources.ApplyResources(this.view_mode, "view_mode");
             this.view_mode.Name = "view_mode";
-            this.view_mode.Size = new System.Drawing.Size(207, 125);
-            this.view_mode.TabIndex = 5;
             this.view_mode.TabStop = false;
-            this.view_mode.Text = "View mode";
+            // 
+            // pictureBox2
+            // 
+            resources.ApplyResources(this.pictureBox2, "pictureBox2");
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.TabStop = false;
             // 
             // quad
             // 
-            this.quad.AutoSize = true;
-            this.quad.Location = new System.Drawing.Point(124, 87);
+            resources.ApplyResources(this.quad, "quad");
             this.quad.Name = "quad";
-            this.quad.Size = new System.Drawing.Size(51, 17);
-            this.quad.TabIndex = 1;
-            this.quad.Text = "Quad";
             this.quad.UseVisualStyleBackColor = true;
             this.quad.CheckedChanged += new System.EventHandler(this.quad_CheckedChanged);
             // 
             // dual
             // 
-            this.dual.AutoSize = true;
+            resources.ApplyResources(this.dual, "dual");
             this.dual.Checked = true;
-            this.dual.Location = new System.Drawing.Point(31, 87);
             this.dual.Name = "dual";
-            this.dual.Size = new System.Drawing.Size(47, 17);
-            this.dual.TabIndex = 0;
             this.dual.TabStop = true;
-            this.dual.Text = "Dual";
             this.dual.UseVisualStyleBackColor = true;
             this.dual.CheckedChanged += new System.EventHandler(this.dual_CheckedChanged);
             // 
             // create_video
-            // 
-            this.create_video.Location = new System.Drawing.Point(23, 154);
+            //
+            // Create rounded create video button
+            this.create_video = new RoundedButton();
+            this.create_video.BackColor = Color.FromArgb(0, 114, 222);
+            this.create_video.FlatAppearance.BorderSize = 0;
+            this.create_video.FlatAppearance.MouseOverBackColor = Color.FromArgb(0, 95, 184);
+            this.create_video.ForeColor = Color.WhiteSmoke;
+            this.create_video.Size = new Size(377, 46);
+            this.create_video.Location = new Point(31, 189);
+            this.create_video.Text = "Create Video";
+            this.create_video.Click += new EventHandler(this.create_video_Click);
+            this.Controls.Add(this.create_video);
+            /*
+            this.create_video.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(114)))), ((int)(((byte)(222)))));
+            this.create_video.Cursor = System.Windows.Forms.Cursors.Default;
+            this.create_video.FlatAppearance.BorderSize = 0;
+            this.create_video.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(95)))), ((int)(((byte)(184)))));
+            resources.ApplyResources(this.create_video, "create_video");
+            this.create_video.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.create_video.Name = "create_video";
-            this.create_video.Size = new System.Drawing.Size(323, 37);
-            this.create_video.TabIndex = 6;
-            this.create_video.Text = "Create video";
-            this.create_video.UseVisualStyleBackColor = true;
+            this.create_video.UseVisualStyleBackColor = false;
             this.create_video.Click += new System.EventHandler(this.create_video_Click);
+            */
             // 
             // name_video
             // 
-            this.name_video.Location = new System.Drawing.Point(142, 116);
+            this.name_video.BackColor = System.Drawing.Color.White;
+            this.name_video.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            resources.ApplyResources(this.name_video, "name_video");
             this.name_video.Name = "name_video";
-            this.name_video.Size = new System.Drawing.Size(204, 20);
-            this.name_video.TabIndex = 7;
             this.name_video.TextChanged += new System.EventHandler(this.name_video_TextChanged);
             // 
             // label_for_name
             // 
-            this.label_for_name.AutoSize = true;
-            this.label_for_name.Location = new System.Drawing.Point(23, 119);
+            resources.ApplyResources(this.label_for_name, "label_for_name");
             this.label_for_name.Name = "label_for_name";
-            this.label_for_name.Size = new System.Drawing.Size(99, 13);
-            this.label_for_name.TabIndex = 8;
-            this.label_for_name.Text = "New name of video";
             // 
             // four
             // 
-            this.four.AutoSize = true;
-            this.four.Location = new System.Drawing.Point(374, 33);
+            resources.ApplyResources(this.four, "four");
             this.four.Name = "four";
-            this.four.Size = new System.Drawing.Size(39, 17);
-            this.four.TabIndex = 16;
-            this.four.Text = "V4";
             this.four.UseVisualStyleBackColor = true;
             this.four.CheckedChanged += new System.EventHandler(this.four_CheckedChanged);
             // 
             // third
             // 
-            this.third.AutoSize = true;
-            this.third.Location = new System.Drawing.Point(329, 33);
+            resources.ApplyResources(this.third, "third");
             this.third.Name = "third";
-            this.third.Size = new System.Drawing.Size(39, 17);
-            this.third.TabIndex = 15;
-            this.third.Text = "V3";
             this.third.UseVisualStyleBackColor = true;
             this.third.CheckedChanged += new System.EventHandler(this.third_CheckedChanged);
             // 
             // second
             // 
-            this.second.AutoSize = true;
-            this.second.Location = new System.Drawing.Point(284, 33);
+            resources.ApplyResources(this.second, "second");
             this.second.Name = "second";
-            this.second.Size = new System.Drawing.Size(39, 17);
-            this.second.TabIndex = 14;
-            this.second.Text = "V2";
             this.second.UseVisualStyleBackColor = true;
             this.second.CheckedChanged += new System.EventHandler(this.second_CheckedChanged);
             // 
             // first
             // 
-            this.first.AutoSize = true;
-            this.first.Location = new System.Drawing.Point(239, 33);
+            resources.ApplyResources(this.first, "first");
             this.first.Name = "first";
-            this.first.Size = new System.Drawing.Size(39, 17);
-            this.first.TabIndex = 13;
-            this.first.Text = "V1";
             this.first.UseVisualStyleBackColor = true;
             this.first.CheckedChanged += new System.EventHandler(this.first_CheckedChanged);
             // 
+            // pictureBox1
+            // 
+            resources.ApplyResources(this.pictureBox1, "pictureBox1");
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.TabStop = false;
+            // 
             // Encoder
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(607, 215);
+            this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.Controls.Add(this.four);
             this.Controls.Add(this.third);
             this.Controls.Add(this.label_for_name);
@@ -197,17 +205,57 @@
             this.Controls.Add(this.image_load);
             this.Controls.Add(this.video_load);
             this.Controls.Add(this.has_image);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.DoubleBuffered = true;
+            this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(74)))), ((int)(((byte)(74)))));
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.MaximizeBox = false;
             this.Name = "Encoder";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "VideoEncoder";
             this.view_mode.ResumeLayout(false);
             this.view_mode.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
+
+        public class RoundedButton : Button
+        {
+            public int CornerRadius { get; set; } = 5;
+
+            public RoundedButton()
+            {
+                this.FlatStyle = FlatStyle.Flat;
+                this.FlatAppearance.BorderSize = 0;
+                this.BackColor = Color.FromArgb(229, 229, 229);
+                this.ForeColor = Color.FromArgb(74, 74, 74);
+                this.Cursor = Cursors.Hand;
+            }
+
+            protected override void OnPaint(PaintEventArgs e)
+            {
+                base.OnPaint(e);
+
+                GraphicsPath path = new GraphicsPath();
+                int radius = CornerRadius;
+                int diameter = radius * 2;
+                Rectangle bounds = new Rectangle(0, 0, Width, Height);
+
+                path.AddArc(bounds.Left, bounds.Top, diameter, diameter, 180, 90);
+                path.AddArc(bounds.Right - diameter, bounds.Top, diameter, diameter, 270, 90);
+                path.AddArc(bounds.Right - diameter, bounds.Bottom - diameter, diameter, diameter, 0, 90);
+                path.AddArc(bounds.Left, bounds.Bottom - diameter, diameter, diameter, 90, 90);
+                path.CloseFigure();
+
+                this.Region = new Region(path);
+
+                using (Pen pen = new Pen(Color.Transparent))
+                {
+                    e.Graphics.DrawPath(pen, path);
+                }
+            }
+        }
+
 
         #endregion
         private System.Windows.Forms.CheckBox has_image;
@@ -223,6 +271,7 @@
         private System.Windows.Forms.CheckBox third;
         private System.Windows.Forms.CheckBox second;
         private System.Windows.Forms.CheckBox first;
+        private PictureBox pictureBox2;
+        private PictureBox pictureBox1;
     }
 }
-
