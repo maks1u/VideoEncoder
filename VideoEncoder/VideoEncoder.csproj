@@ -33,7 +33,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>eye2 128x128.ico</ApplicationIcon>
+    <ApplicationIcon>icon blue.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -94,6 +94,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="eye2 128x128.ico" />
+    <Content Include="icon blue.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
